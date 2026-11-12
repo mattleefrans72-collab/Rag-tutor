@@ -1,0 +1,57 @@
+[
+  {
+    "id": "google-linear-regression-001",
+    "source_id": "google-linear-regression",
+    "parent_id": null,
+    "node_type": "metadata",
+    "level": 0,
+    "heading": "Module information",
+    "content": "**Estimated length:** 80 minutes\r\n\r\n### Learning objectives\r\n\r\n- Explain a loss function and how it works.\r\n- Define and describe how gradient descent finds the optimal model parameters.\r\n- Describe how to tune hyperparameters to efficiently train a linear model.\r\n\r\n### Prerequisites\r\n\r\n- [Introduction to Machine Learning](https://developers.google.com/machine-learning/intro-to-ml)",
+    "position": 1,
+    "source_url": "https://developers.google.com/machine-learning/crash-course/linear-regression"
+  },
+  {
+    "id": "google-linear-regression-002",
+    "source_id": "google-linear-regression",
+    "parent_id": null,
+    "node_type": "detail",
+    "level": 0,
+    "heading": "Introduction",
+    "content": "Linear regression is a statistical technique used to find the relationship between variables. In an ML context, linear regression finds the relationship between features and a label.",
+    "position": 2,
+    "source_url": "https://developers.google.com/machine-learning/crash-course/linear-regression"
+  },
+  {
+    "id": "google-linear-regression-003",
+    "source_id": "google-linear-regression",
+    "parent_id": null,
+    "node_type": "detail",
+    "level": 0,
+    "heading": "Example: vehicle weight and fuel efficiency",
+    "content": "For example, suppose we want to predict a car's fuel efficiency in miles per gallon based on how heavy the car is, and we have the following dataset:\r\n\r\n| Pounds in 1000s (feature) | Miles per gallon (label) |\r\n|---:|---:|\r\n| 3.5 | 18 |\r\n| 3.69 | 15 |\r\n| 3.44 | 18 | \r\n| 3.43 | 16 |\r\n| 4.34 | 15 |\r\n| 4.42 | 14 |\r\n| 2.37 | 24 |\r\n\r\nIf we plotted these points, we'd get the following graph:\r\n\r\n:::figure\r\nid: figure-01\r\nposition: 1\r\noriginal_url: https://developers.google.com/static/machine-learning/crash-course/linear-regression/images/car-data-points.png\r\nlocal_path: figures/figure-01-car-data-points.png\r\nalt_text: \"Scatter plot of vehicle weight against miles per gallon, showing a downward trend as vehicle weight increases.\"\r\ncaption: \"Car heaviness (in pounds) versus miles per gallon rating. As a car gets heavier, its miles per gallon rating generally decreases.\"\r\n:::\r\n\r\nWe could create our own model by drawing a best fit line through the points:\r\n\r\n:::figure\r\nid: figure-02\r\nposition: 2\r\noriginal_url: https://developers.google.com/static/machine-learning/crash-course/linear-regression/images/car-data-points-with-model.png\r\nlocal_path: figures/figure-02-best-fit-line.png\r\nalt_text: \"Vehicle weight and miles-per-gallon data points with a downward-sloping best-fit line representing the linear model.\"\r\ncaption: \"A best fit line drawn through the data from the previous figure.\"\r\n:::",
+    "position": 3,
+    "source_url": "https://developers.google.com/machine-learning/crash-course/linear-regression"
+  },
+  {
+    "id": "google-linear-regression-004",
+    "source_id": "google-linear-regression",
+    "parent_id": null,
+    "node_type": "detail",
+    "level": 0,
+    "heading": "Linear regression equation",
+    "content": "In algebraic terms, the model is defined as $y = mx + b$, where:\r\n\r\n$$\r\ny = mx + b\r\n$$\r\n\r\n- $y$: is miles per gallon\u2014the value we want to predict.\r\n- $m$: is the slope of the line.\r\n- $x$: is pounds\u2014our input value.\r\n- $b$: is the y-intercept.\r\n\r\nIn ML, we write the equation for a linear regression model as follows:\r\n\r\n$$\r\ny' = b + w_1x_1\r\n$$\r\n\r\n- $y'$: is the predicted label\u2014the output.\r\n- $b$: is the bias of the model. Bias is the same concept as the y-intercept in the algebraic equation for a line. In ML, bias is sometimes referred to as $w_0$. Bias is a parameter of the model and is calculated during training.\r\n- $w_1$: is the weight of the feature. Weight is the same concept as the slope $m$ in the algebraic equation for a line. Weight is a parameter of the model and is calculated during training.\r\n- $x_1$: is a feature\u2014the input.\r\n\r\nDuring training, the model calculates the weight and bias that produce the best model.\r\n\r\n:::figure\r\nid: figure-03\r\nposition: 3\r\noriginal_url: https://developers.google.com/static/machine-learning/crash-course/linear-regression/images/equation.png\r\nlocal_path: figures/figure-03-linear-equation.png\r\nalt_text: \"Annotated linear regression equation y prime equals b plus w one x one, identifying the prediction, bias, weight, and feature.\"\r\ncaption: \"Mathematical representation of a linear model.\"\r\n:::\r\n\r\n### Example prediction\r\n\r\nIn our example, we'd calculate the weight and bias from the line we drew. The bias is 34 (where the line intersects the y-axis), and the weight is \u20134.6 (the slope of the line). The model would be defined as $y' = 34 + (-4.6)(x_1)$, and we could use it to make predictions. For instance, using this model, a 4,000-pound car would have a predicted fuel efficiency of 15.6 miles per gallon.\r\n\r\n:::figure\r\nid: figure-04\r\nposition: 4\r\noriginal_url: https://developers.google.com/static/machine-learning/crash-course/linear-regression/images/model-prediction.png\r\nlocal_path: figures/figure-04-model-prediction.png\r\nalt_text: \"Best-fit line with the prediction point for a four-thousand-pound vehicle highlighted at 15.6 miles per gallon.\"\r\ncaption: \"Using the model, a 4,000-pound car has a predicted fuel efficiency of 15.6 miles per gallon.\"\r\n:::\r\n\r\n### Models with multiple features\r\n\r\nAlthough the example in this section uses only one feature\u2014the heaviness of the car\u2014a more sophisticated model might rely on multiple features, each having a separate weight ($w_1$, $w_2$, etc.). For example, a model that relies on five features would be written as follows:\r\n\r\n$$\r\ny' = b + w_1x_1 + w_2x_2 + w_3x_3 + w_4x_4 + w_5x_5\r\n$$\r\n\r\nFor example, a model that predicts gas mileage could additionally use features such as the following:\r\n\r\n- Engine displacement\r\n- Acceleration\r\n- Number of cylinders\r\n- Horsepower\r\n \r\nThis model would be written as follows:\r\n\r\n:::figure\r\nid: figure-05\r\nposition: 5\r\noriginal_url: https://developers.google.com/static/machine-learning/crash-course/linear-regression/images/equation-multiple-features.png\r\nlocal_path: figures/figure-05-multiple-features.png\r\nalt_text: \"Linear regression equation containing five weighted input features and one bias term.\"\r\ncaption: \"A model with five features to predict a car's miles per gallon rating.\"\r\n:::\r\n\r\nBy graphing a couple of these additional features, we can see that they also have a linear relationship to the label, miles per gallon:\r\n\r\n:::figure\r\nid: figure-06\r\nposition: 6\r\noriginal_url: https://developers.google.com/static/machine-learning/crash-course/linear-regression/images/displacement.png\r\nlocal_path: figures/figure-06-displacement.png\r\nalt_text: \"Scatter plot of engine displacement against miles per gallon, showing a negative linear relationship.\"\r\ncaption: \"A car's displacement in cubic centimeters and its miles per gallon rating. As a car's engine gets bigger, its miles per gallon rating generally decreases.\"\r\n:::\r\n\r\n:::figure\r\nid: figure-07\r\nposition: 7\r\noriginal_url: https://developers.google.com/static/machine-learning/crash-course/linear-regression/images/acceleration.png\r\nlocal_path: figures/figure-07-acceleration.png\r\nalt_text: \"Scatter plot of acceleration time against miles per gallon, showing a positive linear relationship\"\r\ncaption: \"A car's acceleration and its miles per gallon rating. As a car's acceleration takes longer, the miles per gallon rating generally increases.\"\r\n:::\r\n\r\n### Exercise: Check your understanding\r\n\r\n:::exercise\r\nquestion: \"What parts of the linear regression equation are updated during training?\"\r\n\r\nchoices:\r\n  - text: \"The bias and weights\"\r\n    correct: true\r\n    explanation: \"During training, the model updates the bias and weights.\"\r\n  - text: \"The prediction\"\r\n    correct: false\r\n    explanation: \"Predictions are not updated during training.\"\r\n  - text: \"The feature values\"\r\n    correct: false\r\n    explanation: \"Feature values are part of the dataset, so they're not updated during training.\"\r\n:::",
+    "position": 4,
+    "source_url": "https://developers.google.com/machine-learning/crash-course/linear-regression"
+  },
+  {
+    "id": "google-linear-regression-005",
+    "source_id": "google-linear-regression",
+    "parent_id": null,
+    "node_type": "metadata",
+    "level": 0,
+    "heading": "Key terms",
+    "content": "- [Bias](https://developers.google.com/machine-learning/glossary#bias-math-or-bias-term)\r\n- [Feature](https://developers.google.com/machine-learning/glossary#feature)\r\n- [Label](https://developers.google.com/machine-learning/glossary#label)\r\n- [Linear regression](https://developers.google.com/machine-learning/glossary#linear-regression)\r\n- [Parameter](https://developers.google.com/machine-learning/glossary#parameter)\r\n- [Weight](https://developers.google.com/machine-learning/glossary#weight)",
+    "position": 5,
+    "source_url": "https://developers.google.com/machine-learning/crash-course/linear-regression"
+  }
+]

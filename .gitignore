@@ -1,0 +1,9 @@
+# Disposable Week 2 dependencies and secrets
+/tutor-experiment/vendor/
+/tutor-experiment/.env
+
+# Editor and operating-system files
+/.vscode/
+/.idea/
+Thumbs.db
+.DS_Store
