@@ -1,0 +1,1 @@
+CREATE DATABASE ai_tutor_test OWNER ai_tutor;

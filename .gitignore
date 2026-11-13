@@ -1,4 +1,7 @@
-# Disposable Week 2 dependencies and secrets
+# Root environment configuration
+/.env
+
+# Disposable Week 2
 /tutor-experiment/vendor/
 /tutor-experiment/.env
 
