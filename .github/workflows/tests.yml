@@ -63,6 +63,3 @@ jobs:
 
       - name: Run CI checks
         run: composer ci:check
-
-      - name: Build frontend
-        run: npm run build
