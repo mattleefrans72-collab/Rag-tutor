@@ -507,7 +507,7 @@ function SidebarMenuButton({
   const button = (
     <Comp
       data-slot="sidebar-menu-button"
-      data-sidebar="menu-button"
+      data-sidebar="menu-button"  
       data-size={size}
       data-active={isActive}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
